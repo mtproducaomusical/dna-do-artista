@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arquetipos de Comunicação Artística — DNA do Artista - Marllon Teixeira</title>
+<title>Arquetipos de Comunicação Artística — DNA do Artista</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -429,6 +429,231 @@
     .question-block { padding: 1.25rem 1.25rem; }
     .archetype-card-body { padding: 1.25rem 1.25rem; }
   }
+
+  /* Botão PDF */
+  .btn-pdf {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: white;
+    background: var(--gold);
+    border: none;
+    padding: 12px 36px;
+    border-radius: 2px;
+    cursor: pointer;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    transition: background 0.2s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .btn-pdf:hover { background: var(--text-dark); }
+  .btn-pdf-note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* CSS de impressão — fiel ao layout da tela */
+  @media print {
+    @page {
+      margin: 1.2cm 1.4cm;
+      size: A4;
+    }
+
+    body {
+      background: #F5F0E8 !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+
+    /* Ocultar tudo exceto o resultado */
+    #teste, .btn-restart, .btn-pdf, .btn-pdf-note { display: none !important; }
+    #resultado { display: block !important; }
+
+    /* Cabeçalho de impressão */
+    .print-header {
+      display: flex !important;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 0 0 12px 0;
+      border-bottom: 1px solid #D4B878;
+      margin-bottom: 16px;
+    }
+    .print-header-left {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+    }
+    .print-header-dna {
+      font-size: 28pt;
+      font-weight: 700;
+      color: #C8921A !important;
+      line-height: 1;
+    }
+    .print-header-sub {
+      font-size: 7pt;
+      letter-spacing: 3px;
+      color: #A07820 !important;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+    .print-header-right {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      text-align: right;
+    }
+    .print-header-name {
+      font-size: 10pt;
+      color: #8B6200 !important;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    .print-header-role {
+      font-size: 7pt;
+      color: #A07820 !important;
+      font-style: italic;
+      margin-top: 2px;
+    }
+
+    /* Ocultar header da web no print */
+    .header { display: none !important; }
+
+    /* Resultado */
+    .result-header {
+      background: #1A1208 !important;
+      padding: 16px 20px 14px !important;
+      margin-bottom: 0 !important;
+      border-radius: 3px 3px 0 0;
+    }
+    .result-header-label {
+      font-size: 7pt !important;
+      letter-spacing: 4px;
+      color: #C4A050 !important;
+    }
+    .result-title {
+      font-size: 22pt !important;
+      color: #C8921A !important;
+    }
+    #result-sub {
+      font-size: 9pt !important;
+      color: #C4A050 !important;
+    }
+
+    .result-body {
+      padding: 0 !important;
+    }
+
+    /* Cards */
+    .archetype-card {
+      break-inside: avoid;
+      border: 1px solid #D4B878 !important;
+      margin-top: 12px !important;
+      margin-bottom: 10px !important;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .archetype-card-header {
+      background: #1A1208 !important;
+      padding: 12px 16px !important;
+    }
+
+    .secondary-card .archetype-card-header {
+      background: #2A2208 !important;
+    }
+
+    .archetype-badge {
+      font-size: 6pt !important;
+      letter-spacing: 2px;
+      border: 1px solid #C4A050 !important;
+      color: #C4A050 !important;
+      padding: 3px 8px !important;
+    }
+
+    .archetype-name {
+      font-size: 20pt !important;
+      color: #C8921A !important;
+    }
+
+    .secondary-card .archetype-name { font-size: 16pt !important; }
+
+    .archetype-card-body { padding: 12px 16px !important; }
+
+    .archetype-essence {
+      font-size: 10pt !important;
+      color: #8B6200 !important;
+      border-left: 2px solid #D4B878 !important;
+      padding-left: 10px;
+      margin-bottom: 10px !important;
+    }
+
+    .section-label {
+      font-size: 6pt !important;
+      letter-spacing: 2px;
+      color: #C4A050 !important;
+      margin-top: 8px !important;
+      margin-bottom: 3px !important;
+    }
+
+    .section-text {
+      font-size: 8.5pt !important;
+      color: #4A3A10 !important;
+      line-height: 1.5 !important;
+    }
+
+    .tags-wrap { gap: 4px !important; margin-top: 3px !important; }
+
+    .tag {
+      font-size: 7pt !important;
+      padding: 2px 8px !important;
+      border: 1px solid #D4B878 !important;
+      color: #4A3A10 !important;
+      background: #F5F0E8 !important;
+      border-radius: 2px;
+    }
+
+    .divider { margin: 8px 0 !important; border-top: 1px solid #E8DFC8 !important; }
+
+    /* Paleta de cores */
+    .color-swatch {
+      width: 24px !important;
+      height: 24px !important;
+      border: 1px solid rgba(0,0,0,0.1) !important;
+    }
+    .color-info { font-size: 7pt !important; color: #8B7830 !important; }
+
+    /* Aviso */
+    .warning-card {
+      background: #FAEEDA !important;
+      border: 1px solid #F0C060 !important;
+      font-size: 8pt !important;
+      color: #633806 !important;
+      padding: 8px 12px !important;
+      margin-top: 8px !important;
+    }
+
+    /* Gráfico de pontuação — ocultar no PDF para economizar espaço */
+    #score-section { display: none !important; }
+
+    /* Rodapé de impressão */
+    .print-footer {
+      display: block !important;
+      text-align: center;
+      margin-top: 16px;
+      padding-top: 10px;
+      border-top: 1px solid #D4B878;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 7pt;
+      color: #A07820 !important;
+      font-style: italic;
+      letter-spacing: 1px;
+    }
+  }
+
+  /* Ocultar elementos só de print quando na tela */
+  .print-header, .print-footer { display: none; }
 </style>
 </head>
 <body>
@@ -442,6 +667,10 @@
     <div style="height:1px;width:60px;background:var(--gold-mid);opacity:0.4;"></div>
   </div>
   <div class="header-sub">Arquetipos de Comunicação Artística</div>
+  <div style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid rgba(212,184,120,0.2);">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:600;letter-spacing:3px;color:var(--gold-pale);text-transform:uppercase;">Marllon Teixeira</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:12px;font-style:italic;color:var(--gold-faint);letter-spacing:1px;margin-top:3px;">Produtor Musical &amp; Diretor Artístico</div>
+  </div>
 </div>
 
 <!-- TESTE -->
@@ -473,6 +702,19 @@
 
 <!-- RESULTADO -->
 <div id="resultado">
+
+  <!-- Cabeçalho visível apenas no PDF -->
+  <div class="print-header">
+    <div class="print-header-left">
+      <div class="print-header-dna">DNA</div>
+      <div class="print-header-sub">Arquétipos de Comunicação Artística</div>
+    </div>
+    <div class="print-header-right">
+      <div class="print-header-name">Marllon Teixeira</div>
+      <div class="print-header-role">Produtor Musical &amp; Diretor Artístico</div>
+    </div>
+  </div>
+
   <div class="result-header">
     <div class="result-header-label">Seu resultado</div>
     <div class="result-title" id="result-title">Carregando...</div>
@@ -482,7 +724,18 @@
     <div id="result-dominant"></div>
     <div id="result-secondary"></div>
     <div id="score-section"></div>
-    <button class="btn-restart" onclick="reiniciar()">Refazer o teste</button>
+
+    <!-- Rodapé visível apenas no PDF -->
+    <div class="print-footer">
+      Mentoria DNA do Artista · Marllon Teixeira · Produtor Musical &amp; Diretor Artístico · mtproducaomusical.github.io/dna-do-artista
+    </div>
+
+    <!-- Botões -->
+    <div style="text-align:center;margin-top:2.5rem;">
+      <button class="btn-pdf" onclick="exportarPDF()">⬇ Exportar resultado em PDF</button>
+      <div class="btn-pdf-note">O navegador vai abrir uma janela — selecione "Salvar como PDF" no destino de impressão</div>
+      <button class="btn-restart" onclick="reiniciar()">Refazer o teste</button>
+    </div>
   </div>
 </div>
 
@@ -1006,6 +1259,10 @@ function reiniciar() {
   window.scrollTo(0, 0);
 }
 
+function exportarPDF() {
+  window.scrollTo(0, 0);
+  setTimeout(() => window.print(), 200);
+}
 init();
 </script>
 </body>
