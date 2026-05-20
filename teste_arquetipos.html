@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arquetipos de Comunicação Artística — DNA do Artista</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5F0E8;
+    --cream-dark: #EDE7D9;
+    --gold: #8B6200;
+    --gold-mid: #C8921A;
+    --gold-light: #D4B878;
+    --gold-pale: #A07820;
+    --gold-faint: #C4A050;
+    --text-dark: #1A1208;
+    --text-mid: #4A3A10;
+    --text-light: #8B7830;
+    --border: #D4B878;
+    --border-light: #E8DFC8;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .header {
+    background: var(--text-dark);
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+  }
+
+  .header-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--gold-faint);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .header-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 600;
+    color: var(--gold-mid);
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+
+  .header-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--gold-mid);
+    border-radius: 50%;
+    margin: 0.75rem auto;
+  }
+
+  .header-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--gold-light);
+    font-style: italic;
+    letter-spacing: 1px;
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  .intro-card {
+    background: white;
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    padding: 2rem 2.25rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .intro-card p {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--text-mid);
+  }
+
+  .intro-card p + p { margin-top: 1rem; }
+
+  .intro-card strong {
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .progress-wrap {
+    margin-bottom: 2rem;
+  }
+
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-light);
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .progress-bar {
+    height: 2px;
+    background: var(--border-light);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--gold-mid);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  .question-block {
+    background: white;
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    padding: 1.75rem 2.25rem;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s;
+  }
+
+  .question-block.answered {
+    border-color: var(--gold-light);
+  }
+
+  .q-number {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold-faint);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .q-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 400;
+    color: var(--text-dark);
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 8px; }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--border-light);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    background: var(--cream);
+  }
+
+  .option:hover { border-color: var(--gold-light); background: white; }
+
+  .option input[type="radio"] { display: none; }
+
+  .option-dot {
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--gold-light);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 2px;
+    position: relative;
+    transition: all 0.15s;
+  }
+
+  .option input:checked ~ .option-content .dummy,
+  .option.selected .option-dot {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .option.selected {
+    border-color: var(--gold);
+    background: white;
+  }
+
+  .option.selected .option-dot::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .option-text {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--text-mid);
+  }
+
+  .option.selected .option-text { color: var(--text-dark); }
+
+  .submit-wrap {
+    text-align: center;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .btn-submit {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    color: white;
+    background: var(--gold);
+    border: none;
+    padding: 14px 48px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-submit:hover { background: var(--text-dark); }
+  .btn-submit:disabled { background: var(--border); cursor: not-allowed; }
+
+  .submit-note {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 0.75rem;
+  }
+
+  /* RESULTADO */
+  #resultado { display: none; }
+
+  .result-header {
+    text-align: center;
+    padding: 3rem 2rem 2rem;
+    background: var(--text-dark);
+    color: var(--gold-mid);
+  }
+
+  .result-header-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--gold-faint);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .result-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 0.25rem;
+  }
+
+  .result-title strong {
+    font-weight: 600;
+    color: var(--gold-mid);
+  }
+
+  .result-body { padding: 0 1.5rem 4rem; max-width: 760px; margin: 0 auto; }
+
+  .archetype-card {
+    background: white;
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .archetype-card-header {
+    padding: 1.5rem 2rem;
+    background: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .archetype-badge {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border: 1px solid var(--gold-faint);
+    color: var(--gold-faint);
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .archetype-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--gold-mid);
+    line-height: 1;
+  }
+
+  .archetype-card-body { padding: 1.75rem 2rem; }
+
+  .archetype-essence {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--gold);
+    border-left: 2px solid var(--gold-light);
+    padding-left: 1rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-faint);
+    margin-bottom: 0.5rem;
+    margin-top: 1.25rem;
+  }
+
+  .section-text {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-mid);
+  }
+
+  .palette-wrap { display: flex; gap: 8px; margin-top: 0.5rem; align-items: center; }
+
+  .color-swatch {
+    width: 36px;
+    height: 36px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.08);
+    flex-shrink: 0;
+  }
+
+  .color-info { font-size: 12px; color: var(--text-light); line-height: 1.4; }
+
+  .tags-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 0.5rem; }
+
+  .tag {
+    font-size: 12px;
+    padding: 4px 12px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-mid);
+    background: var(--cream);
+  }
+
+  .warning-card {
+    background: #FAEEDA;
+    border: 1px solid #F0C060;
+    border-radius: 3px;
+    padding: 1rem 1.25rem;
+    margin-top: 1.25rem;
+    font-size: 13px;
+    color: #633806;
+    line-height: 1.6;
+  }
+
+  .warning-card strong { font-weight: 500; }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 1.5rem 0;
+  }
+
+  .secondary-card .archetype-card-header { background: #2A2208; }
+  .secondary-card .archetype-name { font-size: 28px; }
+
+  .score-bar-wrap { margin-top: 2rem; }
+
+  .score-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+
+  .score-label { width: 110px; color: var(--text-mid); flex-shrink: 0; font-size: 12px; }
+  .score-bar-bg { flex: 1; height: 4px; background: var(--border-light); border-radius: 2px; }
+  .score-bar-fill { height: 100%; background: var(--gold-mid); border-radius: 2px; transition: width 0.6s ease; }
+  .score-val { width: 24px; text-align: right; color: var(--text-light); font-size: 12px; flex-shrink: 0; }
+
+  .btn-restart {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: var(--text-mid);
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 10px 32px;
+    border-radius: 2px;
+    cursor: pointer;
+    margin-top: 2rem;
+    transition: all 0.2s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .btn-restart:hover { border-color: var(--gold); color: var(--gold); }
+
+  @media (max-width: 600px) {
+    .header-title { font-size: 38px; }
+    .question-block { padding: 1.25rem 1.25rem; }
+    .archetype-card-body { padding: 1.25rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">Mentoria DNA do Artista</div>
+  <div class="header-title">DNA</div>
+  <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin:0.5rem 0;">
+    <div style="height:1px;width:60px;background:var(--gold-mid);opacity:0.4;"></div>
+    <div class="header-dot"></div>
+    <div style="height:1px;width:60px;background:var(--gold-mid);opacity:0.4;"></div>
+  </div>
+  <div class="header-sub">Arquetipos de Comunicação Artística</div>
+</div>
+
+<!-- TESTE -->
+<div id="teste">
+  <div class="container">
+
+    <div class="intro-card">
+      <p>Este teste revela <strong>como você se comunica e se posiciona</strong> como artista — não apenas o que você cria, mas como você aparece, fala e se relaciona com quem te segue.</p>
+      <p>Responda com <strong>honestidade</strong>, escolhendo o que mais reflete como você <em>realmente age</em> — não como gostaria de agir. Não existe resposta certa ou errada. Ao final, você verá seu arquétipo dominante e secundário com orientações práticas de comunicação.</p>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span id="prog-label">0 de 24 respondidas</span>
+        <span id="prog-pct">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+
+    <div id="questions-wrap"></div>
+
+    <div class="submit-wrap">
+      <button class="btn-submit" id="btn-submit" onclick="calcular()" disabled>Ver meu resultado</button>
+      <div class="submit-note" id="submit-note">Responda todas as 24 perguntas para continuar</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- RESULTADO -->
+<div id="resultado">
+  <div class="result-header">
+    <div class="result-header-label">Seu resultado</div>
+    <div class="result-title" id="result-title">Carregando...</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--gold-faint);margin-top:0.5rem;letter-spacing:1px;" id="result-sub"></div>
+  </div>
+  <div class="result-body">
+    <div id="result-dominant"></div>
+    <div id="result-secondary"></div>
+    <div id="score-section"></div>
+    <button class="btn-restart" onclick="reiniciar()">Refazer o teste</button>
+  </div>
+</div>
+
+<script>
+const ARQUETIPOS = {
+  heroi: {
+    nome: "Herói",
+    grupo: "Transformadores",
+    essencia: "Você mostra que é possível superar. Sua jornada inspira porque as pessoas te veem lutar e escolher continuar.",
+    comunicacao: "Compartilha jornada, bastidores e superação. Seu conteúdo conecta porque é real — não começa no topo, começa na luta.",
+    tom: "Direto, determinado, motivador. Fala com quem ainda está no meio do caminho.",
+    conteudo: ["Bastidores do processo criativo", "Marcos conquistados com contexto", "Histórias de superação pessoal", "Vídeos de progressão ao longo do tempo"],
+    cuidado: "Evite parecer que você já tem todas as respostas. A vulnerabilidade da luta é o que conecta — não o troféu.",
+    paleta: [{hex:"#1A1A2E",nome:"Azul noite"},{hex:"#C0392B",nome:"Vermelho ação"},{hex:"#F5F0E8",nome:"Creme base"},{hex:"#C8921A",nome:"Dourado"}],
+    tipografia: "Títulos: fontes bold e geométricas (Ex. Montserrat Bold, Oswald). Corpo: clara e direta (Ex. Inter, Roboto).",
+    dresscode: "Cores sólidas e fortes. Preto, branco, vermelho ou azul escuro. Postura ativa — sem poses estáticas. Ambientes que remetem a ação ou processo.",
+    visual: "Feed com contraste alto. Fotos em movimento ou processo. Paleta com no máximo 2 cores fortes."
+  },
+  mago: {
+    nome: "Mago",
+    grupo: "Transformadores",
+    essencia: "Você provoca transformação interior. Sua arte não entretém — ela muda o que as pessoas sentem sobre si mesmas.",
+    comunicacao: "Conteúdo que revela o invisível. Você faz as pessoas pararem e pensarem diferente.",
+    tom: "Profundo, misterioso, revelador. Fala com quem está pronto para ser movido.",
+    conteudo: ["Reflexões profundas sobre fé e identidade", "Bastidores do processo criativo com camadas de significado", "Momentos de insight e revelação", "Perguntas que provocam sem dar a resposta"],
+    cuidado: "Profundidade sem clareza afasta. Seja acessível — o mistério atrai, o hermético isola.",
+    paleta: [{hex:"#2C1654",nome:"Roxo profundo"},{hex:"#8B6200",nome:"Dourado"},{hex:"#0D0D0D",nome:"Preto"},{hex:"#F5F0E8",nome:"Creme"}],
+    tipografia: "Títulos: fontes serifadas elegantes (Ex. Cormorant Garamond, Playfair Display). Corpo: suave e legível (Ex. Lora, Georgia).",
+    dresscode: "Tons escuros, roxo, vinho, preto. Tecidos com textura. Ambientes com luz dramática ou símbolos. Expressão intensa, olhar presente.",
+    visual: "Feed escuro e atmosférico. Contrastes dramáticos. Imagens que parecem ter um segundo plano para descobrir."
+  },
+  rebelde: {
+    nome: "Rebelde",
+    grupo: "Transformadores",
+    essencia: "Você não cabe em caixas prontas — e isso é o seu maior diferencial. Sua arte questiona o padrão do que se espera.",
+    comunicacao: "Posicionamento inconfundível. Você diz o que os outros evitam. Você aparece de um jeito que ninguém mais aparece.",
+    tom: "Direto, provocador, autêntico. Sem filtro performático.",
+    conteudo: ["Opiniões fortes sobre o mercado musical cristão", "Contraponto ao que está saturado", "Estética deliberadamente diferente do padrão", "Bastidores que mostram a recusa ao óbvio"],
+    cuidado: "Rebeldia sem propósito é ruído. Saiba o que você defende — não apenas o que rejeita.",
+    paleta: [{hex:"#1A1A1A",nome:"Preto"},{hex:"#E74C3C",nome:"Vermelho vivo"},{hex:"#F5F5DC",nome:"Bege"},{hex:"#2ECC71",nome:"Verde elétrico"}],
+    tipografia: "Títulos: fontes expressivas e ousadas (Ex. Impact, Anton, fontes personalizadas). Corpo: simples e sem ornamento (Ex. Arial, Inter).",
+    dresscode: "Combinações inesperadas de cor. Peças com statement. Preto com um elemento surpresa. Cabelo ou acessório marcante. Pose que desafia a câmera.",
+    visual: "Feed com quebras intencionais de padrão. Alternância de estilos com coerência no posicionamento. Nada parece acidental."
+  },
+  governante: {
+    nome: "Governante",
+    grupo: "Organizadores",
+    essencia: "Você lidera. Sua presença dá segurança e direção a quem te acompanha.",
+    comunicacao: "Conteúdo que orienta, organiza e posiciona. Você fala com autoridade — e as pessoas ouvem porque confiam.",
+    tom: "Seguro, estruturado, visionário. Fala como quem sabe para onde está indo.",
+    conteudo: ["Posicionamentos claros sobre o mercado artístico", "Visão de futuro para artistas cristãos", "Conteúdo educativo de referência", "Sínteses e frameworks que facilitam decisões"],
+    cuidado: "Autoridade sem calor humano cria admiração mas não vínculo. Mostre o lado humano também.",
+    paleta: [{hex:"#1C3A5E",nome:"Azul real"},{hex:"#C8921A",nome:"Dourado"},{hex:"#FFFFFF",nome:"Branco"},{hex:"#2C2C2C",nome:"Cinza escuro"}],
+    tipografia: "Títulos: fontes clássicas e com peso (Ex. Merriweather Bold, Libre Baskerville). Corpo: limpa e profissional (Ex. Source Sans Pro, Open Sans).",
+    dresscode: "Paleta sóbria — azul marinho, cinza, preto, branco. Roupas estruturadas. Postura ereta, presença forte. Ambientes que remetem a competência.",
+    visual: "Feed organizado e consistente. Grid com padrão claro. Cores neutras com um acento dourado ou azul."
+  },
+  curador: {
+    nome: "Curador",
+    grupo: "Organizadores",
+    essencia: "Você serve e cuida. Sua arte faz as pessoas se sentirem menos sozinhas.",
+    comunicacao: "Conteúdo que abraça. Você cria um lugar seguro nas redes — onde seu público sabe que será acolhido.",
+    tom: "Gentil, empático, presente. Fala como quem realmente se importa.",
+    conteudo: ["Letras e reflexões de consolo e pertencimento", "Mensagens de afirmação e cuidado", "Bastidores que mostram sua humanidade", "Perguntas que convidam o público a compartilhar"],
+    cuidado: "O Curador tende a se apagar em favor da mensagem. Sua história importa tanto quanto o que você entrega.",
+    paleta: [{hex:"#8FBC8F",nome:"Verde sálvia"},{hex:"#F5F0E8",nome:"Creme"},{hex:"#D4B878",nome:"Dourado suave"},{hex:"#8B7355",nome:"Terracota claro"}],
+    tipografia: "Títulos: fontes acolhedoras e legíveis (Ex. Lora, Libre Baskerville). Corpo: fluida e próxima (Ex. Merriweather, Georgia).",
+    dresscode: "Tons terrosos e naturais. Verde, bege, marrom, branco. Tecidos leves e confortáveis. Expressão aberta e receptiva. Ambientes aconchegantes.",
+    visual: "Feed com paleta quente e acolhedora. Fotos com pessoas ou elementos da natureza. Sensação de abraço visual."
+  },
+  criador: {
+    nome: "Criador",
+    grupo: "Organizadores",
+    essencia: "Você constrói mundos únicos. Sua arte tem uma estética tão própria que se reconhece antes de qualquer palavra.",
+    comunicacao: "Seu feed é uma extensão da sua arte. Cada post é intencional, cada detalhe importa.",
+    tom: "Original, visual, intencional. Fala com quem aprecia o que é singular.",
+    conteudo: ["Bastidores do processo criativo com foco estético", "Curadoria visual coerente de referências", "Conteúdo que revela sua identidade artística", "Detalhes de construção das músicas e da imagem"],
+    cuidado: "O Criador pode se fechar no processo e esquecer de conectar com o público. Comunique para fora.",
+    paleta: [{hex:"#2D2D2D",nome:"Carvão"},{hex:"#B5651D",nome:"Âmbar"},{hex:"#F5F0E8",nome:"Creme"},{hex:"#6B8E23",nome:"Verde oliva"}],
+    tipografia: "Títulos: fontes com personalidade visual forte (Ex. Abril Fatface, Josefin Sans). Corpo: neutra para não competir (Ex. Raleway Light, Nunito).",
+    dresscode: "Escolhas visuais intencionais. Pode ser minimalista ou maximalista — mas nunca aleatório. Um elemento visual marcante. Cores que compõem o frame.",
+    visual: "Feed com identidade visual imediata. Consistência de filtro, paleta e enquadramento. Parece obra de arte, não só conteúdo."
+  },
+  inocente: {
+    nome: "Inocente",
+    grupo: "Buscadores",
+    essencia: "Você carrega leveza e fé simples. Sua arte respira num mundo sufocado.",
+    comunicacao: "Conteúdo que alivia. Você não precisa performar profundidade — sua autenticidade já é sua força.",
+    tom: "Simples, alegre, verdadeiro. Fala como alguém que ainda acredita no bom.",
+    conteudo: ["Gratidão e leveza no cotidiano", "Fé no dia a dia — não só nos momentos grandes", "Bastidores simples e despretensiosos", "Celebração de pequenas conquistas"],
+    cuidado: "O Inocente pode ser visto como superficial. Mostre também o que carregou para chegar à leveza — a autenticidade tem profundidade.",
+    paleta: [{hex:"#FFF9F0",nome:"Branco marfim"},{hex:"#87CEEB",nome:"Azul céu"},{hex:"#FFD700",nome:"Amarelo sol"},{hex:"#90EE90",nome:"Verde suave"}],
+    tipografia: "Títulos: fontes arredondadas e acessíveis (Ex. Poppins, Quicksand). Corpo: simples e legível (Ex. Nunito, Lato).",
+    dresscode: "Cores claras e suaves — branco, bege, azul claro, amarelo. Roupas simples. Ambientes naturais ou iluminados. Sorriso genuíno, postura aberta.",
+    visual: "Feed claro, iluminado, com muito espaço. Cores pastéis. Sensação de ar fresco e simplicidade."
+  },
+  explorador: {
+    nome: "Explorador",
+    grupo: "Buscadores",
+    essencia: "Você está em movimento. Sua arte convida para a jornada — você não tem todas as respostas, mas está caminhando.",
+    comunicacao: "Conteúdo de descoberta. Você compartilha o que está encontrando no caminho, não um destino já chegado.",
+    tom: "Curioso, livre, convidativo. Fala com quem também está buscando.",
+    conteudo: ["Descobertas musicais e referências diversas", "Reflexões de quem está no processo", "Bastidores de experimentações", "Novas perspectivas sobre temas conhecidos"],
+    cuidado: "Explorador sem norte pode parecer instável. Ancore sua jornada num propósito — mostre que a busca tem uma direção.",
+    paleta: [{hex:"#8B4513",nome:"Marrom terra"},{hex:"#228B22",nome:"Verde floresta"},{hex:"#DAA520",nome:"Âmbar"},{hex:"#F5F0E8",nome:"Creme"}],
+    tipografia: "Títulos: fontes com personalidade aventureira (Ex. Playfair Display, Cinzel). Corpo: legível e natural (Ex. Libre Baskerville, Lora).",
+    dresscode: "Tons terrosos e naturais. Textura e camadas. Ambientes externos ou de viagem. Postura de quem está descobrindo, não posando.",
+    visual: "Feed com variedade controlada. Cada post parece uma descoberta nova, mas há um fio que une tudo. Tons de terra e natureza."
+  },
+  sabio: {
+    nome: "Sábio",
+    grupo: "Buscadores",
+    essencia: "Você ilumina. Sua arte entrega substância e faz as pessoas saírem diferentes.",
+    comunicacao: "Conteúdo que ensina sem parecer aula. Você faz o complexo parecer claro.",
+    tom: "Preciso, reflexivo, embasado. Fala com quem quer entender mais fundo.",
+    conteudo: ["Ensinamentos sobre música, fé e arte com profundidade", "Reflexões teológicas ou filosóficas aplicadas", "Análises de referências artísticas", "Desmistificação de conceitos do mercado musical"],
+    cuidado: "O Sábio pode parecer distante. Mostre que você também aprende, questiona e erra.",
+    paleta: [{hex:"#1C3A5E",nome:"Azul profundo"},{hex:"#8B6914",nome:"Dourado escuro"},{hex:"#F5F0E8",nome:"Creme"},{hex:"#4A4A4A",nome:"Cinza"}],
+    tipografia: "Títulos: fontes clássicas e com autoridade (Ex. Cormorant Garamond, EB Garamond). Corpo: elegante e legível (Ex. Lora, Libre Baskerville).",
+    dresscode: "Roupas sóbrias e cuidadas. Azul escuro, cinza, preto. Óculos ou elemento que remeta a reflexão. Postura serena e presente.",
+    visual: "Feed clean e organizado. Muito texto de qualidade. Paleta neutra com destaque para conteúdo. Parece um livro que você quer ler inteiro."
+  },
+  amante: {
+    nome: "Amante",
+    grupo: "Conectores",
+    essencia: "Você entrega com intensidade. Sua arte vem de um lugar de devoção total — e isso se sente.",
+    comunicacao: "Conteúdo que emociona. Você se permite ser vulnerável, e isso é o que conecta.",
+    tom: "Intenso, íntimo, apaixonado. Fala como quem entrega tudo.",
+    conteudo: ["Momentos de adoração e intimidade com Deus", "Vulnerabilidade emocional autêntica", "Beleza estética cuidada em cada detalhe", "O que te move a criar — de verdade"],
+    cuidado: "O Amante pode se perder na intensidade. Equilibre intimidade com presença — mostre também leveza.",
+    paleta: [{hex:"#8B0000",nome:"Vinho"},{hex:"#C8921A",nome:"Dourado"},{hex:"#1A1A1A",nome:"Preto"},{hex:"#FFF0F5",nome:"Rosa suave"}],
+    tipografia: "Títulos: fontes com elegância e emoção (Ex. Cormorant Garamond Italic, Playfair Display). Corpo: suave e romântica (Ex. Lora, Crimson Text).",
+    dresscode: "Vinho, vermelho, dourado, preto. Roupas com textura e elegância. Expressão intensa e presente. Luz baixa e dramática. Detalhes que remetem a cuidado.",
+    visual: "Feed com muita emoção visual. Tons quentes e profundos. Luz suave e estudada. Cada imagem parece um momento sagrado."
+  },
+  cara_comum: {
+    nome: "Cara Comum",
+    grupo: "Conectores",
+    essencia: "Você é igual a quem te segue — e isso é exatamente o que conecta. Sem pedestal, sem distância.",
+    comunicacao: "Autenticidade radical. Seu conteúdo faz as pessoas pensarem 'isso sou eu'.",
+    tom: "Natural, sem filtro, acessível. Fala como um amigo próximo.",
+    conteudo: ["Dia a dia real — sem produção excessiva", "Erros, aprendizados e o que você ainda está descobrindo", "Conteúdo que o seguidor poderia ter feito também", "Momentos simples com mensagem genuína"],
+    cuidado: "Proximidade demais sem posicionamento pode tornar você esquecível. Diferenciação também importa — mostre o que só você tem.",
+    paleta: [{hex:"#F5F0E8",nome:"Creme"},{hex:"#8B7355",nome:"Marrom neutro"},{hex:"#4A4A4A",nome:"Cinza"},{hex:"#FFFFFF",nome:"Branco"}],
+    tipografia: "Títulos: fontes simples e diretas (Ex. Poppins SemiBold, Raleway). Corpo: muito legível e próxima (Ex. Open Sans, Source Sans Pro).",
+    dresscode: "Roupas do dia a dia. Confortável, sem exageros. Ambientes cotidianos reais. Postura relaxada. O que você usaria saindo de casa normalmente.",
+    visual: "Feed com aparência autêntica e não-produzida. Fotos naturais, sem filtro pesado. Sente-se que é real. Cores neutras e quentes."
+  },
+  bobo: {
+    nome: "Bobo da Corte",
+    grupo: "Conectores",
+    essencia: "Você traz vida e celebração. Sua presença faz as pessoas quererem mais.",
+    comunicacao: "Conteúdo que anima. Você usa leveza e humor com propósito — e isso aproxima muito mais do que parece.",
+    tom: "Bem-humorado, energético, surpreendente. Fala com quem precisa respirar.",
+    conteudo: ["Bastidores divertidos e descontraídos", "Humor com verdade — não apenas entretenimento", "Celebração de conquistas com alegria genuína", "Conteúdo inesperado que quebra o padrão do feed"],
+    cuidado: "O Bobo da Corte que só entretém pode ter dificuldade de ser levado a sério. Mostre profundidade também — o humor pode ser porta de entrada para verdades grandes.",
+    paleta: [{hex:"#FFD700",nome:"Amarelo vivo"},{hex:"#FF6B35",nome:"Laranja"},{hex:"#1A1A1A",nome:"Preto"},{hex:"#FFFFFF",nome:"Branco"}],
+    tipografia: "Títulos: fontes com energia e personalidade (Ex. Fredoka One, Pacifico). Corpo: legível e dinâmica (Ex. Nunito, Poppins).",
+    dresscode: "Cores vibrantes e ousadas. Um elemento sempre inesperado — estampa, acessório, cor. Expressão aberta e energética. Ambientes divertidos ou coloridos.",
+    visual: "Feed com energia alta. Cores vibrantes. Alternância de formatos — vídeo, carrossel, foto. Sente-se movimento em cada post."
+  }
+};
+
+const PERGUNTAS = [
+  {
+    texto: "Quando você pensa em compartilhar algo nas redes, o que mais te motiva?",
+    opcoes: [
+      {texto: "Mostrar uma conquista ou superação — algo que você venceu ou conseguiu", arq: "heroi"},
+      {texto: "Revelar uma verdade profunda que poucos percebem ao redor", arq: "mago"},
+      {texto: "Quebrar uma expectativa — fazer diferente do que todo mundo faz", arq: "rebelde"},
+      {texto: "Organizar e inspirar — dar direção clara para quem te segue", arq: "governante"}
+    ]
+  },
+  {
+    texto: "Como você se sente quando está prestes a se apresentar ou aparecer publicamente?",
+    opcoes: [
+      {texto: "Focado e determinado — é hora de entregar o melhor de mim", arq: "heroi"},
+      {texto: "Presente e intenso — algo precisa acontecer aqui", arq: "mago"},
+      {texto: "Irrequieto — quero surpreender, sair do script esperado", arq: "rebelde"},
+      {texto: "Responsável — sinto o peso de representar algo maior que eu", arq: "governante"}
+    ]
+  },
+  {
+    texto: "Quando alguém te questiona ou discorda da sua arte publicamente, sua primeira reação é:",
+    opcoes: [
+      {texto: "Defender com argumentos — acredito no que faço e não recuo facilmente", arq: "heroi"},
+      {texto: "Acolher — quero entender a dor por trás da crítica antes de responder", arq: "curador"},
+      {texto: "Criar algo — a crítica vira combustível para uma nova obra", arq: "criador"},
+      {texto: "Ignorar com leveza — não preciso da aprovação de todos para seguir", arq: "bobo"}
+    ]
+  },
+  {
+    texto: "Que tipo de conteúdo você mais gosta de consumir de outros artistas?",
+    opcoes: [
+      {texto: "Bastidores de superação e processo de criação intenso", arq: "heroi"},
+      {texto: "Conteúdo profundo, reflexivo, que muda minha forma de pensar", arq: "sabio"},
+      {texto: "Algo surpreendente e diferente que eu nunca vi antes", arq: "explorador"},
+      {texto: "Conteúdo que me faz sentir parte de uma comunidade maior", arq: "cara_comum"}
+    ]
+  },
+  {
+    texto: "Quando você imagina seu público ideal, o que mais quer que ele sinta ao te acompanhar?",
+    opcoes: [
+      {texto: "Inspiração para não desistir do que acredita", arq: "heroi"},
+      {texto: "Paz e acolhimento — um lugar seguro para ser quem é", arq: "curador"},
+      {texto: "Liberdade para ser diferente e autêntico", arq: "rebelde"},
+      {texto: "Alegria e leveza no dia a dia", arq: "bobo"}
+    ]
+  },
+  {
+    texto: "Se você pudesse definir seu posicionamento em uma frase, qual se aproxima mais?",
+    opcoes: [
+      {texto: "\"Eu mostro que é possível superar e vencer\"", arq: "heroi"},
+      {texto: "\"Eu transformo o que as pessoas sentem sobre si mesmas\"", arq: "mago"},
+      {texto: "\"Eu abro caminhos que ainda não existiam\"", arq: "criador"},
+      {texto: "\"Eu faço as pessoas se sentirem vistas e amadas\"", arq: "amante"}
+    ]
+  },
+  {
+    texto: "Nas redes sociais, qual formato de conteúdo você se sente mais confortável criando?",
+    opcoes: [
+      {texto: "Vídeos de processo, bastidores e jornada pessoal", arq: "explorador"},
+      {texto: "Textos profundos, reflexões e conteúdo devocional", arq: "sabio"},
+      {texto: "Conteúdo diferente e experimental que quebra o padrão", arq: "rebelde"},
+      {texto: "Conteúdo leve, com humor e celebração genuína", arq: "bobo"}
+    ]
+  },
+  {
+    texto: "O que mais te incomoda na comunicação de outros artistas?",
+    opcoes: [
+      {texto: "Falta de consistência e compromisso com o que prometem", arq: "governante"},
+      {texto: "Superficialidade — muito visual, pouco conteúdo real", arq: "sabio"},
+      {texto: "Conformação — todo mundo fazendo exatamente a mesma coisa", arq: "rebelde"},
+      {texto: "Distanciamento — artista que parece inacessível e perfeito demais", arq: "cara_comum"}
+    ]
+  },
+  {
+    texto: "Quando você cria uma legenda para uma foto ou vídeo, qual é seu instinto natural?",
+    opcoes: [
+      {texto: "Contar o que aprendi ou conquistei nessa experiência", arq: "heroi"},
+      {texto: "Compartilhar uma reflexão que me tocou profundamente", arq: "mago"},
+      {texto: "Ser criativo e inesperado — fugir do óbvio de qualquer jeito", arq: "criador"},
+      {texto: "Ser simples e próximo — como se fosse conversa com amigo próximo", arq: "cara_comum"}
+    ]
+  },
+  {
+    texto: "Qual dessas situações te gera mais energia como artista?",
+    opcoes: [
+      {texto: "Receber feedback de que minha música ajudou alguém a superar algo", arq: "heroi"},
+      {texto: "Perceber que minha arte mudou a forma de alguém ver o mundo", arq: "mago"},
+      {texto: "Ouvir que minha arte é única e que nunca viram nada igual", arq: "criador"},
+      {texto: "Saber que minha música foi trilha sonora de momento íntimo de alguém", arq: "amante"}
+    ]
+  },
+  {
+    texto: "Como você lida com a construção da sua imagem visual como artista?",
+    opcoes: [
+      {texto: "Priorizo autenticidade — quero parecer real e acessível acima de tudo", arq: "cara_comum"},
+      {texto: "Priorizo estética — cada detalhe da imagem precisa ser coerente com a arte", arq: "criador"},
+      {texto: "Priorizo liberdade — minha imagem pode mudar conforme minha fase", arq: "explorador"},
+      {texto: "Priorizo beleza e cuidado — quero que tudo seja bonito e significativo", arq: "amante"}
+    ]
+  },
+  {
+    texto: "Qual dessas descrições mais se aproxima de como você age no dia a dia como artista?",
+    opcoes: [
+      {texto: "Disciplinado, focado e muito orientado a resultado", arq: "governante"},
+      {texto: "Curioso, estudioso, sempre pesquisando algo novo", arq: "sabio"},
+      {texto: "Intuitivo, espontâneo e movido pelo momento presente", arq: "explorador"},
+      {texto: "Generoso, presente e muito atento às pessoas ao redor", arq: "curador"}
+    ]
+  },
+  {
+    texto: "Quando você compõe, de onde vem a maior parte da sua motivação?",
+    opcoes: [
+      {texto: "De experiências de superação e vitória que quero compartilhar", arq: "heroi"},
+      {texto: "De revelações espirituais e verdades que precisam ser ditas", arq: "mago"},
+      {texto: "Da vontade de criar algo que ainda não existe no mercado", arq: "criador"},
+      {texto: "Do desejo de cuidar e acolher quem está sofrendo", arq: "curador"}
+    ]
+  },
+  {
+    texto: "Como você prefere que as pessoas descrevam sua arte para os outros?",
+    opcoes: [
+      {texto: "\"Ouça isso — vai te dar força para continuar\"", arq: "heroi"},
+      {texto: "\"Ouça isso — vai te tocar de um jeito que você não espera\"", arq: "mago"},
+      {texto: "\"Ouça isso — é completamente diferente de tudo que você já ouviu\"", arq: "rebelde"},
+      {texto: "\"Ouça isso — você vai se sentir abraçado\"", arq: "curador"}
+    ]
+  },
+  {
+    texto: "O que você sente quando vê um artista com um posicionamento muito claro e reconhecível?",
+    opcoes: [
+      {texto: "Admiração pela consistência e força de comunicação", arq: "governante"},
+      {texto: "Curiosidade para entender a profundidade por trás da escolha", arq: "sabio"},
+      {texto: "Inspiração para buscar algo igualmente único e meu", arq: "criador"},
+      {texto: "Vontade de descobrir se aquilo também tem leveza e humanidade", arq: "bobo"}
+    ]
+  },
+  {
+    texto: "Qual é sua maior dificuldade quando pensa em se posicionar nas redes?",
+    opcoes: [
+      {texto: "Mostrar vulnerabilidade sem perder a postura de força", arq: "heroi"},
+      {texto: "Ser profundo sem parecer pretensioso ou difícil de entender", arq: "mago"},
+      {texto: "Ser diferente sem parecer estranho para o meu próprio público", arq: "rebelde"},
+      {texto: "Parecer relevante sem me distanciar das pessoas", arq: "cara_comum"}
+    ]
+  },
+  {
+    texto: "Quando você pensa no tipo de seguidores que quer atrair, qual perfil mais ressoa?",
+    opcoes: [
+      {texto: "Pessoas que estão lutando e precisam de inspiração real", arq: "heroi"},
+      {texto: "Pessoas que buscam profundidade e querem ser transformadas", arq: "mago"},
+      {texto: "Pessoas que estão cansadas do óbvio e querem algo diferente", arq: "rebelde"},
+      {texto: "Pessoas que se sentem sozinhas e precisam de acolhimento", arq: "curador"}
+    ]
+  },
+  {
+    texto: "Como você reage quando algo no seu projeto artístico não sai como planejado?",
+    opcoes: [
+      {texto: "Encaro como parte do processo e sigo determinado", arq: "heroi"},
+      {texto: "Busco entender o significado mais profundo do que aconteceu", arq: "sabio"},
+      {texto: "Fico animado — o inesperado pode abrir possibilidades novas", arq: "explorador"},
+      {texto: "Me importo menos com o resultado — o que importa é o que entreguei", arq: "inocente"}
+    ]
+  },
+  {
+    texto: "Que tipo de palco ou contexto você imagina para a sua música ideal?",
+    opcoes: [
+      {texto: "Um grande evento com muita gente sendo transformada", arq: "mago"},
+      {texto: "Um encontro íntimo onde cada pessoa sente que a música foi feita para ela", arq: "amante"},
+      {texto: "Um festival com pessoas de todos os gostos sendo surpreendidas", arq: "explorador"},
+      {texto: "Um lugar simples onde as pessoas se sentem em casa", arq: "inocente"}
+    ]
+  },
+  {
+    texto: "Se você pudesse escolher uma palavra para definir sua comunicação, qual seria?",
+    opcoes: [
+      {texto: "Autoridade", arq: "governante"},
+      {texto: "Beleza", arq: "amante"},
+      {texto: "Alegria", arq: "bobo"},
+      {texto: "Sabedoria", arq: "sabio"}
+    ]
+  },
+  {
+    texto: "Como você se sente quando precisa postar conteúdo que não saiu \"perfeito\"?",
+    opcoes: [
+      {texto: "Posto mesmo assim — autenticidade vale mais que perfeição", arq: "cara_comum"},
+      {texto: "Busco entender o que faltou para melhorar da próxima vez", arq: "governante"},
+      {texto: "Releio e vejo que talvez a imperfeição seja parte da mensagem", arq: "mago"},
+      {texto: "Simplesmente sigo em frente — o importante foi criar", arq: "inocente"}
+    ]
+  },
+  {
+    texto: "O que você mais valoriza quando um artista se comunica com o público?",
+    opcoes: [
+      {texto: "Coerência entre o que fala e o que vive", arq: "governante"},
+      {texto: "Profundidade real — não apenas aparência de substância", arq: "sabio"},
+      {texto: "Autenticidade sem filtro — mesmo quando é desconfortável", arq: "rebelde"},
+      {texto: "Calor humano — sentir que o artista realmente se importa", arq: "curador"}
+    ]
+  },
+  {
+    texto: "Qual dessas frases mais descreve o que você quer que sua música seja para as pessoas?",
+    opcoes: [
+      {texto: "Um portal — algo que as transporta para outra experiência", arq: "mago"},
+      {texto: "Um espelho — algo que as faz se ver e se reconhecer", arq: "amante"},
+      {texto: "Um mapa — algo que as ajuda a entender para onde ir", arq: "sabio"},
+      {texto: "Uma festa — algo que as faz celebrar e sentir alegria", arq: "bobo"}
+    ]
+  },
+  {
+    texto: "Quando você pensa na sua identidade artística daqui a 5 anos, o que mais te emociona imaginar?",
+    opcoes: [
+      {texto: "Ter inspirado muitas pessoas a não desistir dos seus sonhos", arq: "heroi"},
+      {texto: "Ter criado um corpo de obra reconhecível e único no mercado", arq: "criador"},
+      {texto: "Ter acolhido e cuidado de pessoas que ninguém mais estava alcançando", arq: "curador"},
+      {texto: "Ter explorado caminhos musicais que ninguém tinha ousado antes", arq: "explorador"}
+    ]
+  }
+];
+
+let respostas = {};
+
+function init() {
+  const wrap = document.getElementById('questions-wrap');
+  wrap.innerHTML = '';
+  respostas = {};
+  PERGUNTAS.forEach((q, i) => {
+    const block = document.createElement('div');
+    block.className = 'question-block';
+    block.id = 'q_' + i;
+    const opts = q.opcoes.map((o, j) => `
+      <label class="option" id="opt_${i}_${j}" onclick="selectOption(${i}, ${j}, '${o.arq}')">
+        <div class="option-dot"></div>
+        <span class="option-text">${o.texto}</span>
+      </label>`).join('');
+    block.innerHTML = `
+      <div class="q-number">Pergunta ${i+1} de ${PERGUNTAS.length}</div>
+      <div class="q-text">${q.texto}</div>
+      <div class="options">${opts}</div>`;
+    wrap.appendChild(block);
+  });
+  updateProgress();
+}
+
+function selectOption(qi, oi, arq) {
+  const prev = respostas[qi];
+  respostas[qi] = arq;
+  const block = document.getElementById('q_' + qi);
+  block.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  document.getElementById('opt_' + qi + '_' + oi).classList.add('selected');
+  block.classList.add('answered');
+  updateProgress();
+}
+
+function updateProgress() {
+  const done = Object.keys(respostas).length;
+  const total = PERGUNTAS.length;
+  const pct = Math.round(done / total * 100);
+  document.getElementById('prog-label').textContent = done + ' de ' + total + ' respondidas';
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-fill').style.width = pct + '%';
+  const btn = document.getElementById('btn-submit');
+  const note = document.getElementById('submit-note');
+  if (done === total) {
+    btn.disabled = false;
+    note.textContent = 'Todas as perguntas respondidas — clique para ver seu resultado';
+  } else {
+    btn.disabled = true;
+    note.textContent = (total - done) + ' pergunta' + (total - done > 1 ? 's' : '') + ' restante' + (total - done > 1 ? 's' : '');
+  }
+}
+
+function calcular() {
+  const scores = {};
+  Object.keys(ARQUETIPOS).forEach(k => scores[k] = 0);
+  Object.values(respostas).forEach(arq => { if (scores[arq] !== undefined) scores[arq]++; });
+  const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]);
+  const dominant = sorted[0][0];
+  const secondary = sorted[1][0];
+  mostrarResultado(dominant, secondary, scores);
+}
+
+function mostrarResultado(dominant, secondary, scores) {
+  document.getElementById('teste').style.display = 'none';
+  const res = document.getElementById('resultado');
+  res.style.display = 'block';
+
+  const da = ARQUETIPOS[dominant];
+  const sa = ARQUETIPOS[secondary];
+
+  document.getElementById('result-title').innerHTML = `Seu arquétipo é <strong>${da.nome}</strong>`;
+  document.getElementById('result-sub').textContent = `Secundário: ${sa.nome} · ${da.grupo}`;
+
+  document.getElementById('result-dominant').innerHTML = buildCard(da, dominant, true, scores[dominant]);
+  document.getElementById('result-secondary').innerHTML = buildCard(sa, secondary, false, scores[secondary]);
+  document.getElementById('score-section').innerHTML = buildScores(scores);
+
+  window.scrollTo(0, 0);
+}
+
+function buildCard(a, key, isDominant, score) {
+  const paleta = a.paleta.map(c => `
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <div class="color-swatch" style="background:${c.hex}"></div>
+      <div class="color-info"><span style="font-weight:500;font-size:13px;color:var(--text-dark)">${c.hex}</span><br>${c.nome}</div>
+    </div>`).join('');
+
+  return `<div class="archetype-card ${isDominant ? '' : 'secondary-card'}">
+    <div class="archetype-card-header">
+      <div>
+        <div class="archetype-badge">${isDominant ? 'Arquétipo dominante' : 'Arquétipo secundário'} · ${a.grupo}</div>
+        <div class="archetype-name" style="margin-top:8px">${a.nome}</div>
+      </div>
+    </div>
+    <div class="archetype-card-body">
+      <div class="archetype-essence">${a.essencia}</div>
+      <hr class="divider">
+      <div class="section-label">Como você se comunica</div>
+      <div class="section-text">${a.comunicacao}</div>
+      <div class="section-label">Tom de voz</div>
+      <div class="section-text">${a.tom}</div>
+      <div class="section-label">Conteúdos que funcionam para você</div>
+      <div class="tags-wrap">${a.conteudo.map(c => `<span class="tag">${c}</span>`).join('')}</div>
+      <hr class="divider">
+      <div class="section-label">Paleta de cores</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;margin-top:8px">${paleta}</div>
+      <div class="section-label">Tipografia</div>
+      <div class="section-text">${a.tipografia}</div>
+      <div class="section-label">Dresscode e imagem</div>
+      <div class="section-text">${a.dresscode}</div>
+      <div class="section-label">Feed e estética visual</div>
+      <div class="section-text">${a.visual}</div>
+      <div class="warning-card"><strong>Ponto de atenção:</strong> ${a.cuidado}</div>
+    </div>
+  </div>`;
+}
+
+function buildScores(scores) {
+  const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]);
+  const max = sorted[0][1];
+  const rows = sorted.map(([k, v]) => `
+    <div class="score-row">
+      <div class="score-label">${ARQUETIPOS[k].nome}</div>
+      <div class="score-bar-bg"><div class="score-bar-fill" style="width:${max > 0 ? Math.round(v/max*100) : 0}%"></div></div>
+      <div class="score-val">${v}</div>
+    </div>`).join('');
+  return `<div class="archetype-card" style="margin-top:2rem">
+    <div class="archetype-card-body">
+      <div class="section-label" style="margin-top:0">Pontuação completa</div>
+      <div class="score-bar-wrap">${rows}</div>
+    </div>
+  </div>`;
+}
+
+function reiniciar() {
+  document.getElementById('resultado').style.display = 'none';
+  document.getElementById('teste').style.display = 'block';
+  init();
+  window.scrollTo(0, 0);
+}
+
+init();
+</script>
+</body>
+</html>
