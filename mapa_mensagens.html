@@ -55,8 +55,8 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text-dar
 .branch-chev{font-size:11px;transition:transform .3s;opacity:.5}
 .branch.open .branch-chev{transform:rotate(180deg)}
 
-.branch-chars{padding:.65rem 1.25rem .85rem;border-bottom:1px solid rgba(255,255,255,.05);display:none}
-.branch.open .branch-chars{display:block}
+.branch-chars{padding:.65rem 1.25rem .85rem;border-bottom:1px solid rgba(255,255,255,.05);display:block}
+
 .chars-lbl{font-size:9px;letter-spacing:3px;text-transform:uppercase;opacity:.45;margin-bottom:.4rem}
 .chars-list{list-style:none;display:flex;flex-direction:column;gap:3px}
 .chars-list li{font-size:12px;line-height:1.45;display:flex;align-items:flex-start;gap:6px}
@@ -145,12 +145,11 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text-dar
   <div class="vertentes">
 
     <!-- CONGREGACIONAL -->
-    <div class="branch open" id="b-cong">
-      <div class="branch-hdr" onclick="toggle('b-cong','branch')">
+    <div class="branch" id="b-cong">
+      <div class="branch-hdr" style="cursor:default">
         <div class="branch-dot" style="background:var(--cong)"></div>
         <div class="branch-title" style="color:var(--cong-text)">Congregacional</div>
-        <div class="branch-chev" style="color:var(--cong-text)">▼</div>
-      </div>
+        </div>
       <div class="branch-chars">
         <div class="chars-lbl" style="color:var(--cong-text)">Características gerais</div>
         <ul class="chars-list" style="color:var(--cong-text)">
@@ -162,7 +161,7 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text-dar
       </div>
       <div class="cats">
 
-        <div class="cat open" id="c-louvor">
+        <div class="cat" id="c-louvor">
           <div class="cat-hdr" style="background:rgba(76,175,130,.1)" onclick="toggle('c-louvor','cat')">
             <div class="cat-dot" style="background:#4CAF82"></div>
             <div class="cat-title" style="color:#A8D5BB">Louvor / Adoração</div>
@@ -178,7 +177,7 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text-dar
           </div>
         </div>
 
-        <div class="cat open" id="c-edif">
+        <div class="cat" id="c-edif">
           <div class="cat-hdr" style="background:rgba(76,175,130,.07)" onclick="toggle('c-edif','cat')">
             <div class="cat-dot" style="background:#7DC9A8"></div>
             <div class="cat-title" style="color:#B8DCC8">Edificação</div>
@@ -194,7 +193,7 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text-dar
           </div>
         </div>
 
-        <div class="cat open" id="c-evang-c">
+        <div class="cat" id="c-evang-c">
           <div class="cat-hdr" style="background:rgba(76,175,130,.04)" onclick="toggle('c-evang-c','cat')">
             <div class="cat-dot" style="background:#9FDBB8"></div>
             <div class="cat-title" style="color:#C8E8D5">Evangelização</div>
@@ -213,12 +212,11 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text-dar
     </div>
 
     <!-- NÃO CONGREGACIONAL -->
-    <div class="branch open" id="b-naoc">
-      <div class="branch-hdr" onclick="toggle('b-naoc','branch')">
+    <div class="branch" id="b-naoc">
+      <div class="branch-hdr" style="cursor:default">
         <div class="branch-dot" style="background:var(--naoc)"></div>
         <div class="branch-title" style="color:var(--naoc-text)">Não Congregacional</div>
-        <div class="branch-chev" style="color:var(--naoc-text)">▼</div>
-      </div>
+        </div>
       <div class="branch-chars">
         <div class="chars-lbl" style="color:var(--naoc-text)">Características gerais</div>
         <ul class="chars-list" style="color:var(--naoc-text)">
@@ -230,7 +228,7 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text-dar
       </div>
       <div class="cats">
 
-        <div class="cat open" id="c-evang-n">
+        <div class="cat" id="c-evang-n">
           <div class="cat-hdr" style="background:rgba(200,146,26,.1)" onclick="toggle('c-evang-n','cat')">
             <div class="cat-dot" style="background:#C8921A"></div>
             <div class="cat-title" style="color:#E8C870">Evangelização</div>
@@ -246,7 +244,7 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text-dar
           </div>
         </div>
 
-        <div class="cat open" id="c-intro">
+        <div class="cat" id="c-intro">
           <div class="cat-hdr" style="background:rgba(200,146,26,.07)" onclick="toggle('c-intro','cat')">
             <div class="cat-dot" style="background:#D4A840"></div>
             <div class="cat-title" style="color:#EDD080">Introspecção / Reflexão</div>
@@ -261,7 +259,7 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text-dar
           </div>
         </div>
 
-        <div class="cat open" id="c-cot">
+        <div class="cat" id="c-cot">
           <div class="cat-hdr" style="background:rgba(200,146,26,.04)" onclick="toggle('c-cot','cat')">
             <div class="cat-dot" style="background:#E0BC60"></div>
             <div class="cat-title" style="color:#F0D090">Cotidiana</div>
@@ -290,7 +288,7 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text-dar
 
     <div class="transv-grid">
 
-      <div class="dim-card open" id="d-contexto">
+      <div class="dim-card" id="d-contexto">
         <div class="dim-hdr" onclick="toggle('d-contexto','dim-card')">
           <div class="dim-icon" style="background:#EDE7D9;color:var(--gold)">✦</div>
           <div class="dim-title-wrap">
@@ -315,7 +313,7 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text-dar
         </div>
       </div>
 
-      <div class="dim-card open" id="d-relacao">
+      <div class="dim-card" id="d-relacao">
         <div class="dim-hdr" onclick="toggle('d-relacao','dim-card')">
           <div class="dim-icon" style="background:#EDE7D9;color:var(--gold)">✦</div>
           <div class="dim-title-wrap">
@@ -340,7 +338,7 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text-dar
         </div>
       </div>
 
-      <div class="dim-card open" id="d-alcance">
+      <div class="dim-card" id="d-alcance">
         <div class="dim-hdr" onclick="toggle('d-alcance','dim-card')">
           <div class="dim-icon" style="background:#EDE7D9;color:var(--gold)">✦</div>
           <div class="dim-title-wrap">
@@ -361,7 +359,7 @@ body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text-dar
         </div>
       </div>
 
-      <div class="dim-card open" id="d-grau">
+      <div class="dim-card" id="d-grau">
         <div class="dim-hdr" onclick="toggle('d-grau','dim-card')">
           <div class="dim-icon" style="background:#EDE7D9;color:var(--gold)">✦</div>
           <div class="dim-title-wrap">
