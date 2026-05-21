@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa das Mensagens — DNA do Artista</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#F5F0E8;--gold:#8B6200;--gold-mid:#C8921A;--gold-light:#D4B878;
+  --gold-pale:#A07820;--gold-faint:#C4A050;--gold-subtle:#E8DFC8;
+  --text-dark:#1A1208;--text-mid:#4A3A10;--text-light:#8B7830;
+  --border-light:#E8DFC8;
+  --cong:#4CAF82;--cong-dark:#1B3A28;--cong-text:#A8D5BB;--cong-text-light:#C8E8D5;
+  --naoc:#C8921A;--naoc-dark:#2A1E08;--naoc-text:#E8C870;--naoc-text-light:#F0D898;
+}
+body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh}
+
+/* HEADER */
+.ph{background:var(--text-dark);padding:2rem 2rem 1.75rem;text-align:center}
+.ph-label{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:5px;color:var(--gold-faint);text-transform:uppercase;margin-bottom:.4rem}
+.ph-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:600;color:var(--gold-mid);line-height:1;letter-spacing:-1px}
+.ph-div{display:flex;align-items:center;justify-content:center;gap:10px;margin:.6rem 0}
+.ph-div-line{height:1px;width:50px;background:var(--gold-mid);opacity:.4}
+.ph-div-dot{width:5px;height:5px;background:var(--gold-mid);border-radius:50%}
+.ph-sub{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--gold-light);font-style:italic;letter-spacing:1px}
+.ph-name{font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:600;letter-spacing:3px;color:var(--gold-pale);text-transform:uppercase;margin-top:1rem;padding-top:.75rem;border-top:1px solid rgba(212,184,120,.2)}
+.ph-role{font-family:'Cormorant Garamond',serif;font-size:11px;font-style:italic;color:var(--gold-faint);letter-spacing:1px;margin-top:3px}
+
+/* INTRO */
+.intro{max-width:760px;margin:2rem auto 0;padding:0 1.5rem}
+.intro p{font-size:15px;line-height:1.75;color:var(--text-mid)}
+.intro strong{color:var(--gold);font-weight:500}
+
+/* WRAP */
+.wrap{max-width:980px;margin:0 auto;padding:1.5rem 1.5rem 4rem}
+
+/* PERGUNTA RAIZ */
+.root{text-align:center;margin:0 auto 2rem;width:fit-content}
+.root-box{display:inline-block;font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;color:var(--text-dark);background:white;border:1.5px solid var(--gold-mid);padding:.55rem 2rem;border-radius:40px}
+
+/* SEÇÃO LABEL */
+.section-label{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--text-light);text-align:center;margin-bottom:1.25rem}
+
+/* GRID VERTENTES */
+.vertentes{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:.75rem}
+
+/* BRANCH */
+.branch{background:var(--text-dark);border-radius:6px;overflow:hidden}
+.branch-hdr{padding:1rem 1.25rem;display:flex;align-items:center;gap:10px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.06);transition:background .2s}
+.branch-hdr:hover{background:rgba(255,255,255,.04)}
+.branch-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.branch-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;letter-spacing:.5px;flex:1}
+.branch-chev{font-size:11px;transition:transform .3s;opacity:.5}
+.branch.open .branch-chev{transform:rotate(180deg)}
+
+.branch-chars{padding:.65rem 1.25rem .85rem;border-bottom:1px solid rgba(255,255,255,.05);display:none}
+.branch.open .branch-chars{display:block}
+.chars-lbl{font-size:9px;letter-spacing:3px;text-transform:uppercase;opacity:.45;margin-bottom:.4rem}
+.chars-list{list-style:none;display:flex;flex-direction:column;gap:3px}
+.chars-list li{font-size:12px;line-height:1.45;display:flex;align-items:flex-start;gap:6px}
+.chars-list li::before{content:'—';opacity:.35;flex-shrink:0;margin-top:1px}
+
+.cats{padding:.5rem .65rem .65rem;display:flex;flex-direction:column;gap:.4rem}
+
+/* CATEGORY */
+.cat{border-radius:4px;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+.cat-hdr{padding:.65rem .9rem;display:flex;align-items:center;gap:8px;cursor:pointer;transition:background .15s}
+.cat-hdr:hover{background:rgba(255,255,255,.05)}
+.cat-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.cat-title{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;flex:1;letter-spacing:.3px}
+.cat-chev{font-size:10px;transition:transform .25s;opacity:.4}
+.cat.open .cat-chev{transform:rotate(180deg)}
+.cat-body{padding:0 .9rem .7rem;display:none;border-top:1px solid rgba(255,255,255,.04)}
+.cat.open .cat-body{display:block}
+.cat-desc{font-size:12px;line-height:1.6;margin-top:.5rem;opacity:.75}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:.5rem}
+.tag{font-size:11px;padding:3px 9px;border-radius:20px;border:1px solid rgba(255,255,255,.12);opacity:.85;font-family:'Inter',sans-serif}
+
+/* DIMENSÕES TRANSVERSAIS */
+.transv-wrap{margin-top:2.5rem}
+.transv-intro{max-width:760px;margin:0 auto 1.5rem;padding:0 .5rem}
+.transv-intro p{font-size:14px;line-height:1.7;color:var(--text-mid);text-align:center}
+.transv-intro strong{color:var(--gold);font-weight:500}
+
+.transv-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+
+.dim-card{background:white;border:1px solid var(--border-light);border-radius:6px;overflow:hidden}
+.dim-hdr{padding:.85rem 1.1rem;display:flex;align-items:center;gap:10px;cursor:pointer;border-bottom:1px solid var(--border-light);transition:background .2s}
+.dim-hdr:hover{background:var(--cream)}
+.dim-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px}
+.dim-title-wrap{flex:1}
+.dim-title{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--text-dark)}
+.dim-subtitle{font-size:11px;color:var(--text-light);margin-top:1px}
+.dim-chev{font-size:11px;color:var(--text-light);transition:transform .25s}
+.dim-card.open .dim-chev{transform:rotate(180deg)}
+.dim-body{padding:1rem 1.1rem;display:none}
+.dim-card.open .dim-body{display:block}
+
+.dim-option{margin-bottom:.85rem}
+.dim-option:last-child{margin-bottom:0}
+.dim-opt-title{font-size:13px;font-weight:500;color:var(--text-dark);margin-bottom:.2rem;display:flex;align-items:center;gap:6px}
+.dim-opt-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.dim-opt-desc{font-size:12px;line-height:1.6;color:var(--text-mid)}
+
+/* TIP */
+.tip{margin:2rem auto 0;max-width:760px;background:white;border:1px solid var(--border-light);border-left:3px solid var(--gold-mid);border-radius:0 4px 4px 0;padding:1rem 1.25rem}
+.tip p{font-size:14px;line-height:1.7;color:var(--text-mid)}
+.tip strong{color:var(--gold);font-weight:500}
+
+@media(max-width:620px){
+  .vertentes,.transv-grid{grid-template-columns:1fr}
+  .ph-title{font-size:32px}
+}
+@media print{
+  @page{margin:1.2cm 1.4cm;size:A4}
+  body{background:#F5F0E8!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .branch-chars,.cat-body,.dim-body{display:block!important}
+  .branch-chev,.cat-chev,.dim-chev{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="ph">
+  <div class="ph-label">Mentoria DNA do Artista</div>
+  <div class="ph-title">Mapa das Mensagens</div>
+  <div class="ph-div"><div class="ph-div-line"></div><div class="ph-div-dot"></div><div class="ph-div-line"></div></div>
+  <div class="ph-sub">Entenda a intenção da sua música antes de definir o som</div>
+  <div class="ph-name">Marllon Teixeira</div>
+  <div class="ph-role">Produtor Musical &amp; Diretor Artístico</div>
+</div>
+
+<div class="intro">
+  <p>Antes de definir gênero, arranjo ou estética, é preciso responder uma pergunta mais fundamental: <strong>qual é a intenção da sua mensagem?</strong> A resposta determina para quem você canta, onde sua música vive e como ela deve soar. Explore as vertentes e as dimensões abaixo para localizar sua música neste mapa.</p>
+</div>
+
+<div class="wrap">
+
+  <div class="root"><div class="root-box">Qual é o princípio da sua música?</div></div>
+
+  <div class="section-label" style="margin-bottom:1rem;">Vertentes principais</div>
+
+  <div class="vertentes">
+
+    <!-- CONGREGACIONAL -->
+    <div class="branch open" id="b-cong">
+      <div class="branch-hdr" onclick="toggle('b-cong','branch')">
+        <div class="branch-dot" style="background:var(--cong)"></div>
+        <div class="branch-title" style="color:var(--cong-text)">Congregacional</div>
+        <div class="branch-chev" style="color:var(--cong-text)">▼</div>
+      </div>
+      <div class="branch-chars">
+        <div class="chars-lbl" style="color:var(--cong-text)">Características gerais</div>
+        <ul class="chars-list" style="color:var(--cong-text)">
+          <li>Arranjos que facilitem o canto coletivo</li>
+          <li>Linguagem simples e acessível</li>
+          <li>Mensagem clara, sem exigir interpretação</li>
+          <li>De preferência, fáceis de serem tocadas e cantadas</li>
+        </ul>
+      </div>
+      <div class="cats">
+
+        <div class="cat open" id="c-louvor">
+          <div class="cat-hdr" style="background:rgba(76,175,130,.1)" onclick="toggle('c-louvor','cat')">
+            <div class="cat-dot" style="background:#4CAF82"></div>
+            <div class="cat-title" style="color:#A8D5BB">Louvor / Adoração</div>
+            <div class="cat-chev" style="color:#A8D5BB">▼</div>
+          </div>
+          <div class="cat-body" style="background:rgba(76,175,130,.04)">
+            <div class="cat-desc" style="color:#A8D5BB">Música <strong style="color:#C8E8D5">vertical</strong> — a comunicação se dá entre o artista e Deus.</div>
+            <div class="tags">
+              <span class="tag" style="color:#A8D5BB">Deus/Cristo é o centro</span>
+              <span class="tag" style="color:#A8D5BB">O artista canta PARA Deus</span>
+              <span class="tag" style="color:#A8D5BB">Detalha e elogia os atributos de Deus</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat open" id="c-edif">
+          <div class="cat-hdr" style="background:rgba(76,175,130,.07)" onclick="toggle('c-edif','cat')">
+            <div class="cat-dot" style="background:#7DC9A8"></div>
+            <div class="cat-title" style="color:#B8DCC8">Edificação</div>
+            <div class="cat-chev" style="color:#B8DCC8">▼</div>
+          </div>
+          <div class="cat-body" style="background:rgba(76,175,130,.03)">
+            <div class="cat-desc" style="color:#B8DCC8">Música <strong style="color:#C8E8D5">horizontal</strong> — o artista fala sobre Deus para encorajar outra pessoa.</div>
+            <div class="tags">
+              <span class="tag" style="color:#B8DCC8">O fortalecimento da fé é o centro</span>
+              <span class="tag" style="color:#B8DCC8">Canta SOBRE Deus para encorajar</span>
+              <span class="tag" style="color:#B8DCC8">Não é sobre afagar o ego humano</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat open" id="c-evang-c">
+          <div class="cat-hdr" style="background:rgba(76,175,130,.04)" onclick="toggle('c-evang-c','cat')">
+            <div class="cat-dot" style="background:#9FDBB8"></div>
+            <div class="cat-title" style="color:#C8E8D5">Evangelização</div>
+            <div class="cat-chev" style="color:#C8E8D5">▼</div>
+          </div>
+          <div class="cat-body" style="background:rgba(76,175,130,.02)">
+            <div class="cat-desc" style="color:#C8E8D5">Apresenta Deus para quem ainda não o conhece, no contexto da assembleia.</div>
+            <div class="tags">
+              <span class="tag" style="color:#C8E8D5">Fala dos atributos de Deus</span>
+              <span class="tag" style="color:#C8E8D5">Conduz ao arrependimento / conversão</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- NÃO CONGREGACIONAL -->
+    <div class="branch open" id="b-naoc">
+      <div class="branch-hdr" onclick="toggle('b-naoc','branch')">
+        <div class="branch-dot" style="background:var(--naoc)"></div>
+        <div class="branch-title" style="color:var(--naoc-text)">Não Congregacional</div>
+        <div class="branch-chev" style="color:var(--naoc-text)">▼</div>
+      </div>
+      <div class="branch-chars">
+        <div class="chars-lbl" style="color:var(--naoc-text)">Características gerais</div>
+        <ul class="chars-list" style="color:var(--naoc-text)">
+          <li>Não é para ser cantada na igreja</li>
+          <li>Conteúdo denso, letras poéticas</li>
+          <li>Arranjos e estilos não convencionais</li>
+          <li>Mensagens sobre o cotidiano cristão</li>
+        </ul>
+      </div>
+      <div class="cats">
+
+        <div class="cat open" id="c-evang-n">
+          <div class="cat-hdr" style="background:rgba(200,146,26,.1)" onclick="toggle('c-evang-n','cat')">
+            <div class="cat-dot" style="background:#C8921A"></div>
+            <div class="cat-title" style="color:#E8C870">Evangelização</div>
+            <div class="cat-chev" style="color:#E8C870">▼</div>
+          </div>
+          <div class="cat-body" style="background:rgba(200,146,26,.04)">
+            <div class="cat-desc" style="color:#E8C870">Alcança quem está fora da igreja — música que apresenta Deus além dos bancos.</div>
+            <div class="tags">
+              <span class="tag" style="color:#E8C870">Apresenta Deus para quem não o conhece</span>
+              <span class="tag" style="color:#E8C870">Fala dos atributos de Deus</span>
+              <span class="tag" style="color:#E8C870">Conduz ao arrependimento / conversão</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat open" id="c-intro">
+          <div class="cat-hdr" style="background:rgba(200,146,26,.07)" onclick="toggle('c-intro','cat')">
+            <div class="cat-dot" style="background:#D4A840"></div>
+            <div class="cat-title" style="color:#EDD080">Introspecção / Reflexão</div>
+            <div class="cat-chev" style="color:#EDD080">▼</div>
+          </div>
+          <div class="cat-body" style="background:rgba(200,146,26,.03)">
+            <div class="cat-desc" style="color:#EDD080">Convida o ouvinte a olhar para dentro — provoca, questiona e conduz ao movimento interno.</div>
+            <div class="tags">
+              <span class="tag" style="color:#EDD080">Leva a refletir sobre as próprias atitudes</span>
+              <span class="tag" style="color:#EDD080">Conduz ao arrependimento / conversão</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat open" id="c-cot">
+          <div class="cat-hdr" style="background:rgba(200,146,26,.04)" onclick="toggle('c-cot','cat')">
+            <div class="cat-dot" style="background:#E0BC60"></div>
+            <div class="cat-title" style="color:#F0D090">Cotidiana</div>
+            <div class="cat-chev" style="color:#F0D090">▼</div>
+          </div>
+          <div class="cat-body" style="background:rgba(200,146,26,.02)">
+            <div class="cat-desc" style="color:#F0D090">Fala do dia a dia do crente — amor, esperança, desafios — sempre a partir da ótica cristã.</div>
+            <div class="tags">
+              <span class="tag" style="color:#F0D090">Canta sobre situações do dia a dia</span>
+              <span class="tag" style="color:#F0D090">Fala sobre sentimentos comuns</span>
+              <span class="tag" style="color:#F0D090">Sempre sobre a ótica cristã</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- DIMENSÕES TRANSVERSAIS -->
+  <div class="transv-wrap">
+    <div class="section-label">Dimensões transversais</div>
+    <div class="transv-intro">
+      <p>Estas dimensões se aplicam a <strong>qualquer vertente</strong>. Elas refinam sua identidade musical e ajudam a tomar decisões coerentes de repertório, arranjo, imagem e comunicação.</p>
+    </div>
+
+    <div class="transv-grid">
+
+      <div class="dim-card open" id="d-contexto">
+        <div class="dim-hdr" onclick="toggle('d-contexto','dim-card')">
+          <div class="dim-icon" style="background:#EDE7D9;color:var(--gold)">✦</div>
+          <div class="dim-title-wrap">
+            <div class="dim-title">Contexto de fé</div>
+            <div class="dim-subtitle">Em qual tradição sua música se encaixa?</div>
+          </div>
+          <div class="dim-chev">▼</div>
+        </div>
+        <div class="dim-body">
+          <div class="dim-option">
+            <div class="dim-opt-title"><div class="dim-opt-dot" style="background:var(--gold-mid)"></div>Pentecostal / Carismático</div>
+            <div class="dim-opt-desc">Ênfase nos dons do Espírito, adoração expressiva, linguagem direta e emocional. Música com energia e movimento.</div>
+          </div>
+          <div class="dim-option">
+            <div class="dim-opt-title"><div class="dim-opt-dot" style="background:var(--gold-mid)"></div>Litúrgico / Tradicional</div>
+            <div class="dim-opt-desc">Reverência, profundidade teológica, hinos e formas musicais clássicas. Música que honra a herança da fé.</div>
+          </div>
+          <div class="dim-option">
+            <div class="dim-opt-title"><div class="dim-opt-dot" style="background:var(--gold-mid)"></div>Interdenominacional</div>
+            <div class="dim-opt-desc">Linguagem e sonoridade que transcendem tradições específicas. Alcança diferentes vertentes do cristianismo.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dim-card open" id="d-relacao">
+        <div class="dim-hdr" onclick="toggle('d-relacao','dim-card')">
+          <div class="dim-icon" style="background:#EDE7D9;color:var(--gold)">✦</div>
+          <div class="dim-title-wrap">
+            <div class="dim-title">Relação com o sagrado</div>
+            <div class="dim-subtitle">Como sua música se relaciona com Deus?</div>
+          </div>
+          <div class="dim-chev">▼</div>
+        </div>
+        <div class="dim-body">
+          <div class="dim-option">
+            <div class="dim-opt-title"><div class="dim-opt-dot" style="background:var(--gold-mid)"></div>Adoração íntima</div>
+            <div class="dim-opt-desc">Relação vertical e pessoal com Deus. Música de entrega, devoção e encontro. Não é para ser "usada" — é para ser vivida.</div>
+          </div>
+          <div class="dim-option">
+            <div class="dim-opt-title"><div class="dim-opt-dot" style="background:var(--gold-mid)"></div>Proclamação</div>
+            <div class="dim-opt-desc">Declaração direcionada às pessoas. Anuncia verdades, convoca à fé, declara o que Deus é e faz.</div>
+          </div>
+          <div class="dim-option">
+            <div class="dim-opt-title"><div class="dim-opt-dot" style="background:var(--gold-mid)"></div>Profética</div>
+            <div class="dim-opt-desc">Intercessão, declaração sobre tempos e situações. Música que carrega peso espiritual e convocação.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dim-card open" id="d-alcance">
+        <div class="dim-hdr" onclick="toggle('d-alcance','dim-card')">
+          <div class="dim-icon" style="background:#EDE7D9;color:var(--gold)">✦</div>
+          <div class="dim-title-wrap">
+            <div class="dim-title">Alcance</div>
+            <div class="dim-subtitle">Para quem sua música fala além da fé?</div>
+          </div>
+          <div class="dim-chev">▼</div>
+        </div>
+        <div class="dim-body">
+          <div class="dim-option">
+            <div class="dim-opt-title"><div class="dim-opt-dot" style="background:var(--gold-mid)"></div>Exclusivamente cristão</div>
+            <div class="dim-opt-desc">Criada para e pelo povo de fé. Linguagem, referências e contexto são intencionalmente internos à comunidade cristã.</div>
+          </div>
+          <div class="dim-option">
+            <div class="dim-opt-title"><div class="dim-opt-dot" style="background:var(--gold-mid)"></div>Crossover</div>
+            <div class="dim-opt-desc">Música cristã que conversa com o mundo secular sem perder a essência da fé. Ponteia o sagrado e o cotidiano universal.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dim-card open" id="d-grau">
+        <div class="dim-hdr" onclick="toggle('d-grau','dim-card')">
+          <div class="dim-icon" style="background:#EDE7D9;color:var(--gold)">✦</div>
+          <div class="dim-title-wrap">
+            <div class="dim-title">Grau de explicitação da fé</div>
+            <div class="dim-subtitle">Quão direta é a linguagem da fé?</div>
+          </div>
+          <div class="dim-chev">▼</div>
+        </div>
+        <div class="dim-body">
+          <div class="dim-option">
+            <div class="dim-opt-title"><div class="dim-opt-dot" style="background:var(--gold-mid)"></div>Explicitamente cristão</div>
+            <div class="dim-opt-desc">Nome de Jesus, linguagem bíblica direta, referências à fé sem ambiguidade. Quem ouve sabe imediatamente de onde vem.</div>
+          </div>
+          <div class="dim-option">
+            <div class="dim-opt-title"><div class="dim-opt-dot" style="background:var(--gold-mid)"></div>Implicitamente cristão</div>
+            <div class="dim-opt-desc">Mensagem universal com fundamento bíblico não declarado. A fé está presente na cosmovisão e nos valores, mas não na linguagem direta.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="tip">
+    <p><strong>Um projeto pode transitar por mais de uma categoria</strong> — mas todo artista tem uma vertente e uma combinação de dimensões predominantes que definem sua identidade. Identificar as suas é o primeiro passo para fazer escolhas coerentes de repertório, arranjo, imagem e comunicação.</p>
+  </div>
+
+</div>
+
+<script>
+function toggle(id, type) {
+  document.getElementById(id).classList.toggle('open');
+}
+</script>
+</body>
+</html>
